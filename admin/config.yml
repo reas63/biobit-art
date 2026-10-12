@@ -1,0 +1,17 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "artes"
+    label: "Obras de Arte"
+    folder: "content/artes"
+    create: true
+    fields:
+      - {label: "Título da Obra", name: "title", widget: "string"}
+      - {label: "Preço (€)", name: "price", widget: "number"}
+      - {label: "Imagem da Obra", name: "image", widget: "image"}
+      - {label: "Descrição", name: "body", widget: "markdown"}
