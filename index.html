@@ -217,7 +217,9 @@
                 if (!response.ok) throw new Error('Sem obras ainda');
                 
                 const files = await response.json();
-                const mdFiles = files.filter(file => file.name.endsWith('.md'));
+                if (!Array.isArray(files)) throw new Error('Formato inválido');
+
+                const mdFiles = files.filter(file => file.name && file.name.endsWith('.md'));
 
                 if (mdFiles.length === 0) {
                     container.innerHTML = '<div class="loading">Ainda não existem obras publicadas. Aceda ao painel de administração para adicionar a sua primeira obra!</div>';
@@ -227,40 +229,44 @@
                 container.innerHTML = '';
 
                 for (const file of mdFiles) {
-                    const fileRes = await fetch(file.download_url);
-                    const markdownText = await fileRes.text();
-                    
-                    const parsedData = parseMarkdownFrontmatter(markdownText);
-                    
-                    if (parsedData) {
-                        const card = document.createElement('div');
-                        card.className = 'art-card';
+                    try {
+                        const fileRes = await fetch(file.download_url);
+                        const markdownText = await fileRes.text();
                         
-                        const imgSrc = parsedData.image || 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=500';
-                        const title = parsedData.title || 'Obra sem título';
-                        const price = parsedData.price ? `${parsedData.price} €` : 'Sob consulta';
-                        const desc = parsedData.body || 'Sem descrição disponível.';
-                        const payLink = parsedData.payment_link || 'http://mpago.la/xzWR';
+                        const parsedData = parseMarkdownFrontmatter(markdownText);
+                        
+                        if (parsedData) {
+                            const card = document.createElement('div');
+                            card.className = 'art-card';
+                            
+                            const imgSrc = parsedData.image || 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=500';
+                            const title = parsedData.title || 'Obra sem título';
+                            const price = parsedData.price ? `${parsedData.price} €` : 'Sob consulta';
+                            const desc = parsedData.body || 'Sem descrição disponível.';
+                            const payLink = parsedData.payment_link || 'http://mpago.la/xzWR';
 
-                        card.innerHTML = `
-                            <div class="art-img-container">
-                                <img src="${imgSrc}" alt="${title}" class="art-img">
-                            </div>
-                            <div class="art-info">
-                                <h3 class="art-title">${title}</h3>
-                                <div class="art-price">${price}</div>
-                                <p class="art-desc">${desc}</p>
-                                <div class="btn-group">
-                                    <a href="${payLink}" target="_blank" class="pay-btn">💳 Comprar com Mercado Pago</a>
-                                    <a href="./sucesso.html" class="download-site-btn">📥 Já paguei / Descarregar Ficheiro</a>
+                            card.innerHTML = `
+                                <div class="art-img-container">
+                                    <img src="${imgSrc}" alt="${title}" class="art-img">
                                 </div>
-                            </div>
-                        `;
-                        container.appendChild(card);
+                                <div class="art-info">
+                                    <h3 class="art-title">${title}</h3>
+                                    <div class="art-price">${price}</div>
+                                    <p class="art-desc">${desc}</p>
+                                    <div class="btn-group">
+                                        <a href="${payLink}" target="_blank" class="pay-btn">💳 Comprar com Mercado Pago</a>
+                                        <a href="./sucesso.html" class="download-site-btn">📥 Já paguei / Descarregar Ficheiro</a>
+                                    </div>
+                                </div>
+                            `;
+                            container.appendChild(card);
+                        }
+                    } catch (err) {
+                        console.error("Erro ao carregar obra:", err);
                     }
                 }
             } catch (error) {
-                console.error(error);
+                console.error("Erro na galeria:", error);
                 container.innerHTML = '<div class="loading">Ainda não há obras publicadas ou a galeria está vazia. Adicione obras pelo painel de administração!</div>';
             }
         }
