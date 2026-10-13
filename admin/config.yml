@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: reas63/galeria-de-arte-biobit
   branch: main
 
 media_folder: "images/uploads"
