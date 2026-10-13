@@ -1,20 +1,161 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Galeria de Arte BioBit</title>
-  <style>
-    body { font-family: sans-serif; text-align: center; padding: 60px; background: #0f0f0f; color: #fff; }
-    h1 { color: #d4af37; margin-bottom: 10px; }
-    p { color: #aaa; }
-    a { color: #61dafb; text-decoration: none; display: inline-block; margin-top: 30px; padding: 10px 20px; border: 1px solid #61dafb; border-radius: 5px; }
-    a:hover { background: #61dafb; color: #000; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria de Arte Biobit</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --accent-color: #38bdf8;
+            --accent-hover: #0ea5e9;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            padding: 2.5rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid #334155;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            letter-spacing: 1px;
+        }
+        header p {
+            color: #94a3b8;
+            margin-top: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .admin-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            background-color: var(--card-bg);
+            color: var(--accent-color);
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            border: 1px solid #334155;
+            transition: background 0.3s;
+        }
+        .admin-link:hover {
+            background-color: #334155;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .art-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            border: 1px solid #334155;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s;
+        }
+        .art-card:hover {
+            transform: translateY(-5px);
+        }
+        .art-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            background-color: #334155;
+        }
+        .art-info {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .art-title {
+            font-size: 1.25rem;
+            margin: 0 0 0.5rem 0;
+            color: #f1f5f9;
+        }
+        .art-price {
+            font-size: 1.1rem;
+            color: #34d399;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .art-desc {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+        .pay-btn {
+            background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+            color: #0f172a;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            transition: opacity 0.3s;
+            margin-top: auto;
+        }
+        .pay-btn:hover {
+            opacity: 0.9;
+        }
+        footer {
+            text-align: center;
+            padding: 3rem;
+            color: #64748b;
+            border-top: 1px solid #334155;
+            margin-top: 4rem;
+        }
+    </style>
 </head>
 <body>
-  <h1>Galeria de Arte BioBit</h1>
-  <p>Bem-vindo à nova galeria oficial.</p>
-  <a href="/admin/">Aceder ao Painel Administrativo</a>
+
+    <header>
+        <h1>Galeria de Arte Biobit</h1>
+        <p>Exposição exclusiva de obras de arte digital e contemporânea</p>
+    </header>
+
+    <div class="container">
+        <a href="./admin/" class="admin-link">⚙️ Aceder ao Painel de Administração (CMS)</a>
+
+        <div class="gallery-grid" id="gallery-container">
+            <!-- Exemplo de Obra com Link de Pagamento Direto -->
+            <div class="art-card">
+                <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=500" alt="Exemplo de Obra" class="art-img">
+                <div class="art-info">
+                    <h3 class="art-title">Exemplo de Obra de Arte</h3>
+                    <div class="art-price">450,00 €</div>
+                    <p class="art-desc">Obra exclusiva pronta para aquisição imediata com pagamento seguro.</p>
+                    <!-- Substitua o link '#' abaixo pelo seu link real da Stripe, PayPal ou Mercado Pago -->
+                    <a href="https://buy.stripe.com/exemplo-link-de-pagamento" target="_blank" class="pay-btn">Comprar com Pagamento Seguro</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Galeria de Arte Biobit. Todos os direitos reservados.</p>
+    </footer>
+
 </body>
 </html>
