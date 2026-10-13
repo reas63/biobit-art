@@ -119,6 +119,13 @@
         .pay-btn:hover {
             opacity: 0.9;
         }
+        .loading {
+            text-align: center;
+            color: #94a3b8;
+            grid-column: 1 / -1;
+            padding: 3rem;
+            font-size: 1.2rem;
+        }
         footer {
             text-align: center;
             padding: 3rem;
@@ -139,23 +146,91 @@
         <a href="./admin/" class="admin-link">⚙️ Aceder ao Painel de Administração (CMS)</a>
 
         <div class="gallery-grid" id="gallery-container">
-            <!-- Exemplo de Obra com Link de Pagamento Direto -->
-            <div class="art-card">
-                <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=500" alt="Exemplo de Obra" class="art-img">
-                <div class="art-info">
-                    <h3 class="art-title">Exemplo de Obra de Arte</h3>
-                    <div class="art-price">450,00 €</div>
-                    <p class="art-desc">Obra exclusiva pronta para aquisição imediata com pagamento seguro.</p>
-                    <!-- Substitua o link '#' abaixo pelo seu link real da Stripe, PayPal ou Mercado Pago -->
-                    <a href="https://buy.stripe.com/exemplo-link-de-pagamento" target="_blank" class="pay-btn">Comprar com Pagamento Seguro</a>
-                </div>
-            </div>
+            <div class="loading">A carregar obras da galeria...</div>
         </div>
     </div>
 
     <footer>
         <p>&copy; 2026 Galeria de Arte Biobit. Todos os direitos reservados.</p>
     </footer>
+
+    <script>
+        async function loadGallery() {
+            const container = document.getElementById('gallery-container');
+            const repo = "reas63/artesbiobit";
+            const apiURL = `https://api.github.com/repos/${repo}/contents/content/artes`;
+
+            try {
+                const response = await fetch(apiURL);
+                if (!response.ok) throw new Error('Sem obras ainda');
+                
+                const files = await response.json();
+                const mdFiles = files.filter(file => file.name.endsWith('.md'));
+
+                if (mdFiles.length === 0) {
+                    container.innerHTML = '<div class="loading">Ainda não existem obras publicadas. Aceda ao painel de administração para adicionar a sua primeira obra!</div>';
+                    return;
+                }
+
+                container.innerHTML = '';
+
+                for (const file of mdFiles) {
+                    const fileRes = await fetch(file.download_url);
+                    const markdownText = await fileRes.text();
+                    
+                    const parsedData = parseMarkdownFrontmatter(markdownText);
+                    
+                    if (parsedData) {
+                        const card = document.createElement('div');
+                        card.className = 'art-card';
+                        
+                        const imgSrc = parsedData.image || 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=500';
+                        const title = parsedData.title || 'Obra sem título';
+                        const price = parsedData.price ? `${parsedData.price} €` : 'Sob consulta';
+                        const desc = parsedData.body || 'Sem descrição disponível.';
+                        const payLink = parsedData.payment_link || '#';
+
+                        card.innerHTML = `
+                            <img src="${imgSrc}" alt="${title}" class="art-img">
+                            <div class="art-info">
+                                <h3 class="art-title">${title}</h3>
+                                <div class="art-price">${price}</div>
+                                <p class="art-desc">${desc}</p>
+                                <a href="${payLink}" target="_blank" class="pay-btn">Comprar com Pagamento Seguro</a>
+                            </div>
+                        `;
+                        container.appendChild(card);
+                    }
+                }
+            } catch (error) {
+                console.error(error);
+                container.innerHTML = '<div class="loading">Ainda não há obras publicadas ou a galeria está vazia. Adicione obras pelo painel de administração!</div>';
+            }
+        }
+
+        function parseMarkdownFrontmatter(text) {
+            const match = text.match(/^---\s*([\s\S]*?)\s*---([\s\S]*)$/);
+            if (!match) return null;
+
+            const frontmatterLines = match[1].split('\n');
+            const data = {};
+            
+            frontmatterLines.forEach(line => {
+                const colonIndex = line.indexOf(':');
+                if (colonIndex !== -1) {
+                    const key = line.substring(0, colonIndex).trim();
+                    let value = line.substring(colonIndex + 1).trim();
+                    value = value.replace(/^['"](.*)['"]$/, '$1');
+                    data[key] = value;
+                }
+            });
+
+            data.body = match[2].trim();
+            return data;
+        }
+
+        loadGallery();
+    </script>
 
 </body>
 </html>

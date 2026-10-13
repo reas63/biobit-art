@@ -13,6 +13,7 @@ collections:
     create: true
     fields:
       - {label: "Título da Obra", name: "title", widget: "string"}
-      - {label: "Preço (€)", name: "price", widget: "number"}
+      - {label: "Preço (€)", name: "price", widget: "string"}
+      - {label: "Link de Pagamento (Stripe/PayPal)", name: "payment_link", widget: "string", required: false}
       - {label: "Imagem da Obra", name: "image", widget: "image"}
       - {label: "Descrição", name: "body", widget: "markdown"}
