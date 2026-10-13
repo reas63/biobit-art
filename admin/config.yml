@@ -15,6 +15,6 @@ collections:
     fields:
       - {label: "Título da Obra", name: "title", widget: "string"}
       - {label: "Preço (€)", name: "price", widget: "string"}
-      - {label: "Link de Pagamento (Mercado Pago)", name: "payment_link", widget: "string", required: false}
+      - {label: "Link do PayPal (ex: https://paypal.me/seuutilizador)", name: "payment_link", widget: "string", required: false}
       - {label: "Imagem da Obra (Upload Telemóvel/PC)", name: "image", widget: "image"}
       - {label: "Descrição", name: "body", widget: "markdown"}
