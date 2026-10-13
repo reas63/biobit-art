@@ -11,6 +11,7 @@
             --text-color: #f8fafc;
             --accent-color: #38bdf8;
             --accent-hover: #0ea5e9;
+            --success-color: #34d399;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -92,7 +93,7 @@
         }
         .art-price {
             font-size: 1.1rem;
-            color: #34d399;
+            color: var(--success-color);
             font-weight: bold;
             margin-bottom: 1rem;
         }
@@ -102,11 +103,17 @@
             margin-bottom: 1.5rem;
             flex-grow: 1;
         }
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin-top: auto;
+        }
         .pay-btn {
             background: linear-gradient(135deg, #38bdf8, #0ea5e9);
             color: #0f172a;
             border: none;
-            padding: 0.8rem;
+            padding: 0.7rem;
             border-radius: 6px;
             font-weight: bold;
             cursor: pointer;
@@ -114,10 +121,26 @@
             text-decoration: none;
             display: block;
             transition: opacity 0.3s;
-            margin-top: auto;
         }
         .pay-btn:hover {
             opacity: 0.9;
+        }
+        .download-site-btn {
+            background-color: #334155;
+            color: var(--success-color);
+            border: 1px solid #475569;
+            padding: 0.6rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            transition: background 0.3s;
+        }
+        .download-site-btn:hover {
+            background-color: #475569;
         }
         .loading {
             text-align: center;
@@ -188,7 +211,7 @@
                         const title = parsedData.title || 'Obra sem título';
                         const price = parsedData.price ? `${parsedData.price} €` : 'Sob consulta';
                         const desc = parsedData.body || 'Sem descrição disponível.';
-                        const payLink = parsedData.payment_link || '#';
+                        const payLink = parsedData.payment_link || 'http://mpago.la/xzWR';
 
                         card.innerHTML = `
                             <img src="${imgSrc}" alt="${title}" class="art-img">
@@ -196,7 +219,10 @@
                                 <h3 class="art-title">${title}</h3>
                                 <div class="art-price">${price}</div>
                                 <p class="art-desc">${desc}</p>
-                                <a href="${payLink}" target="_blank" class="pay-btn">Comprar com Pagamento Seguro</a>
+                                <div class="btn-group">
+                                    <a href="${payLink}" target="_blank" class="pay-btn">💳 Comprar com Mercado Pago</a>
+                                    <a href="./sucesso.html" class="download-site-btn">📥 Já paguei / Descarregar Ficheiro</a>
+                                </div>
                             </div>
                         `;
                         container.appendChild(card);
