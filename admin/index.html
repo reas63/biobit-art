@@ -3,8 +3,38 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Painel de Administração - Galeria Biobit</title>
-    <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+    <title>Painel de Administração - BioBit Artes</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #0f172a;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        .back-bar {
+            background-color: #1e293b;
+            padding: 12px 20px;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            align-items: center;
+        }
+        .back-link {
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
-<body></body>
+<body>
+    <div class="back-bar">
+        <a href="../" class="back-link">← Voltar à Página Principal (BioBit Artes)</a>
+    </div>
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+</body>
 </html>

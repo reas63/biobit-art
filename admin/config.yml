@@ -2,7 +2,6 @@ backend:
   name: github
   repo: reas63/artesbiobit
   branch: main
-  auth_methods: [token]
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
@@ -14,7 +13,7 @@ collections:
     create: true
     fields:
       - {label: "Título da Obra", name: "title", widget: "string"}
-      - {label: "Preço (€)", name: "price", widget: "string"}
+      - {label: "Preço", name: "price", widget: "string"}
       - {label: "Link do PayPal (ex: https://paypal.me/seuutilizador)", name: "payment_link", widget: "string", required: false}
-      - {label: "Imagem da Obra (Upload Telemóvel/PC)", name: "image", widget: "image"}
-      - {label: "Descrição", name: "body", widget: "markdown"}
+      - {label: "Imagem da Obra (Upload do Telemóvel/PC)", name: "image", widget: "image"}
+      - {label: "Descrição", name: "body", widget: "markdown", required: false}
