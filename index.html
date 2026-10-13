@@ -102,8 +102,54 @@
         .art-card:hover .art-img {
             transform: scale(1.05);
         }
+        /* Botões logo abaixo da imagem */
+        .card-action-bar {
+            padding: 1.2rem 1.5rem 0.5rem 1.5rem;
+            background-color: #1a2333;
+            border-bottom: 1px solid #334155;
+        }
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .pay-btn {
+            background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+            color: #0f172a;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            box-shadow: 0 4px 10px rgba(56, 189, 248, 0.25);
+            transition: opacity 0.3s, transform 0.2s;
+        }
+        .pay-btn:hover {
+            opacity: 0.95;
+            transform: translateY(-1px);
+        }
+        .download-site-btn {
+            background-color: #334155;
+            color: var(--success-color);
+            border: 1px solid #475569;
+            padding: 0.7rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            transition: background 0.3s;
+        }
+        .download-site-btn:hover {
+            background-color: #475569;
+        }
         .art-info {
-            padding: 1.8rem;
+            padding: 1.5rem;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
@@ -124,49 +170,7 @@
             color: #94a3b8;
             font-size: 0.98rem;
             line-height: 1.5;
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
-        }
-        .btn-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-            margin-top: auto;
-        }
-        .pay-btn {
-            background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-            color: #0f172a;
-            border: none;
-            padding: 0.85rem;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            display: block;
-            box-shadow: 0 4px 10px rgba(56, 189, 248, 0.25);
-            transition: opacity 0.3s, transform 0.2s;
-        }
-        .pay-btn:hover {
-            opacity: 0.95;
-            transform: translateY(-1px);
-        }
-        .download-site-btn {
-            background-color: #334155;
-            color: var(--success-color);
-            border: 1px solid #475569;
-            padding: 0.75rem;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            display: block;
-            transition: background 0.3s;
-        }
-        .download-site-btn:hover {
-            background-color: #475569;
+            margin: 0;
         }
         .loading {
             text-align: center;
@@ -249,14 +253,16 @@
                                 <div class="art-img-container">
                                     <img src="${imgSrc}" alt="${title}" class="art-img">
                                 </div>
-                                <div class="art-info">
-                                    <h3 class="art-title">${title}</h3>
-                                    <div class="art-price">${price}</div>
-                                    <p class="art-desc">${desc}</p>
+                                <div class="card-action-bar">
                                     <div class="btn-group">
                                         <a href="${payLink}" target="_blank" class="pay-btn">💳 Comprar com Mercado Pago</a>
                                         <a href="./sucesso.html" class="download-site-btn">📥 Já paguei / Descarregar Ficheiro</a>
                                     </div>
+                                </div>
+                                <div class="art-info">
+                                    <h3 class="art-title">${title}</h3>
+                                    <div class="art-price">${price}</div>
+                                    <p class="art-desc">${desc}</p>
                                 </div>
                             `;
                             container.appendChild(card);
