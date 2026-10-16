@@ -13,6 +13,7 @@
             --text-muted: #64748b;
             --accent: #0284c7;
             --border: #e2e8f0;
+            --success: #16a34a;
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -171,8 +172,13 @@
         .post-meta {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            justify-content: space-between;
             margin-bottom: 1rem;
+        }
+        .post-meta-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
         .post-category {
             background: rgba(2, 132, 199, 0.1);
@@ -182,6 +188,14 @@
             font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
+        }
+        .post-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--success);
+            background: rgba(22, 163, 74, 0.1);
+            padding: 0.2rem 0.75rem;
+            border-radius: 6px;
         }
         .post-date {
             font-size: 0.85rem;
@@ -314,6 +328,8 @@
                 <option value="Outros">Outros</option>
             </select>
             
+            <input type="text" id="post-price" placeholder="Preço em USD (ex: 250.00 ou Sob Consulta)">
+
             <label class="file-label" id="file-label-text">Selecionar Imagem ou Vídeo da Obra:</label>
             <input type="file" id="post-media-file" accept="image/*,video/*">
 
@@ -471,6 +487,7 @@
             editingPostId = null;
             document.getElementById("post-title").value = "";
             document.getElementById("post-body").value = "";
+            document.getElementById("post-price").value = "";
             document.getElementById("post-media-file").value = "";
             document.getElementById("post-category").selectedIndex = 0;
             adminPanelTitle.textContent = "✨ Publicar Nova Obra de Arte";
@@ -484,6 +501,7 @@
             editingPostId = postId;
             document.getElementById("post-title").value = post.title || "";
             document.getElementById("post-body").value = post.body || "";
+            document.getElementById("post-price").value = post.price || "";
             document.getElementById("post-category").value = post.category || "Pintura";
             document.getElementById("post-media-file").value = "";
             
@@ -536,6 +554,7 @@
         btnPublish.addEventListener("click", async () => {
             const title = document.getElementById("post-title").value.trim();
             const category = document.getElementById("post-category").value;
+            const price = document.getElementById("post-price").value.trim();
             const body = document.getElementById("post-body").value.trim();
             const mediaFile = document.getElementById("post-media-file").files[0];
 
@@ -570,6 +589,7 @@
                     const updateData = {
                         title: title,
                         category: category,
+                        price: price,
                         body: body
                     };
                     if (mediaUrl) {
@@ -586,6 +606,7 @@
                     await addDoc(collection(db, "galeria"), {
                         title: title,
                         category: category,
+                        price: price,
                         media: mediaUrl,
                         mediaType: mediaType,
                         body: body,
@@ -620,6 +641,11 @@
                     mediaElement = `<video controls><source src="${mediaSrc}">O seu browser não suporta vídeo.</video>`;
                 }
 
+                let priceHtml = "";
+                if (p.price) {
+                    priceHtml = `<div class="post-price">$${p.price} USD</div>`;
+                }
+
                 let adminButtonsHtml = "";
                 if (isAdmin) {
                     adminButtonsHtml = `
@@ -636,8 +662,10 @@
                     ${mediaElement}
                     <div class="post-content">
                         <div class="post-meta">
-                            <span class="post-category">${p.category || 'Arte'}</span>
-                            <span class="post-date">Galeria Exclusiva</span>
+                            <div class="post-meta-left">
+                                <span class="post-category">${p.category || 'Arte'}</span>
+                            </div>
+                            ${priceHtml}
                         </div>
                         <h2>${p.title}</h2>
                         <p>${p.body.replace(/\n/g, '<br>')}</p>
@@ -659,7 +687,8 @@
                 const titleMatch = p.title && p.title.toLowerCase().includes(searchTerm);
                 const bodyMatch = p.body && p.body.toLowerCase().includes(searchTerm);
                 const categoryMatch = p.category && p.category.toLowerCase().includes(searchTerm);
-                return titleMatch || bodyMatch || categoryMatch;
+                const priceMatch = p.price && p.price.toLowerCase().includes(searchTerm);
+                return titleMatch || bodyMatch || categoryMatch || priceMatch;
             });
 
             renderPosts(filtered);
