@@ -301,5 +301,69 @@
         loadGallery();
     </script>
 
+
+<style>
+footer {
+    background: #f1f5f9;
+    border-top: 1px solid #e2e8f0;
+    padding: 3rem 1rem 2rem 1rem;
+    margin-top: 4rem;
+}
+.footer-container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+@media(max-width: 600px) {
+    .footer-container { grid-template-columns: 1fr; }
+}
+.footer-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 1.25rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+.footer-card h4 {
+    margin-top: 0;
+    color: #0284c7;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+.footer-card p {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.5;
+}
+.footer-bottom {
+    max-width: 800px;
+    margin: 2rem auto 0 auto;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #64748b;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 1rem;
+}
+</style>
+<footer>
+    <div class="footer-container">
+        <div class="footer-card">
+            <h4>📜 Termos de Uso e Privacidade</h4>
+            <p>A Galeria BioBit respeita a sua privacidade. Utilizamos cookies e recolhemos dados estatísticos para otimizar a visualização das obras de arte. Ao navegar no site, concorda com estes termos.</p>
+        </div>
+        <div class="footer-card">
+            <h4>📬 Contacto</h4>
+            <p>Para aquisição de obras ou questões, entre em contacto direto através do email:</p>
+            <p style="margin-top: 0.5rem;"><strong style="color: #0f172a;">📧 reas63@hotmail.com</strong></p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2026 BioBit Art Gallery (galeria.biobit.online). Todos os direitos reservados.
+    </div>
+</footer>
 </body>
+
 </html>
