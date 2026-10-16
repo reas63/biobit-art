@@ -124,8 +124,9 @@
         .btn-logout { background: #ef4444; color: #fff; margin-left: 0.5rem; }
         .btn-back { background: #64748b; color: #fff; width: 100%; margin-top: 0.5rem; }
         .btn-action-group { display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; }
-        .btn-edit { background: #eab308; color: #fff; padding: 0.5rem 1rem; font-size: 0.85rem; border-radius: 6px; }
-        .btn-delete { background: #ef4444; color: #fff; padding: 0.5rem 1rem; font-size: 0.85rem; border-radius: 6px; }
+        .btn-edit { background: #eab308; color: #fff; padding: 0.5rem 1rem; font-size: 0.85rem; border-radius: 6px; font-weight: 600; border: none; cursor: pointer; }
+        .btn-download { background: #0ea5e9; color: #fff; padding: 0.5rem 1rem; font-size: 0.85rem; border-radius: 6px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+        .btn-delete { background: #ef4444; color: #fff; padding: 0.5rem 1rem; font-size: 0.85rem; border-radius: 6px; font-weight: 600; border: none; cursor: pointer; }
         .login-trigger {
             text-align: right;
             margin-bottom: 1rem;
@@ -154,9 +155,16 @@
             margin-bottom: 2rem;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
         }
-        .post-card img, .post-card video {
+        .post-card img {
             width: 100%;
-            height: 320px;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            display: block;
+            background: #000;
+        }
+        .post-card video {
+            width: 100%;
+            aspect-ratio: 16 / 9;
             object-fit: cover;
             display: block;
             background: #000;
@@ -330,7 +338,7 @@
             
             <input type="text" id="post-price" placeholder="Preço em USD (ex: 250.00 ou Sob Consulta)">
 
-            <label class="file-label" id="file-label-text">Selecionar Imagem ou Vídeo da Obra:</label>
+            <label class="file-label" id="file-label-text">Selecionar Imagem (Quadrada) ou Vídeo (Retangular):</label>
             <input type="file" id="post-media-file" accept="image/*,video/*">
 
             <textarea id="post-body" rows="6" placeholder="Descrição, técnica, dimensões ou detalhes da obra..."></textarea>
@@ -650,8 +658,9 @@
                 if (isAdmin) {
                     adminButtonsHtml = `
                         <div class="btn-action-group">
-                            <button onclick="window.editPost('${p.id}')" class="btn-edit">✏️ Editar Obra</button>
-                            <button onclick="window.deletePost('${p.id}')" class="btn-delete">🗑️ Apagar Obra</button>
+                            <button onclick="window.editPost('${p.id}')" class="btn-edit">✏️ Editar</button>
+                            <a href="${mediaSrc}" download="obra-${p.id}" target="_blank" class="btn-download">📥 Baixar Ficheiro</a>
+                            <button onclick="window.deletePost('${p.id}')" class="btn-delete">🗑️ Apagar</button>
                         </div>
                     `;
                 }
