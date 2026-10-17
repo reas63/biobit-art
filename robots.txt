@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://galeria.biobit.online/sitemap.xml
